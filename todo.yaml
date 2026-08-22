@@ -1,0 +1,13 @@
+categories:
+  - name: Mandatory
+    mandatory: true
+    items:
+      - id: apply-su
+        title: Søg SU
+        details: |
+            https://www.su.dk/
+        due: 2026-09-30
+        tags: [admin]
+      - id: activate-email
+        title: Aktivér EK-mail
+        tags: [admin]
