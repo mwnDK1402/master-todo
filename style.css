@@ -44,3 +44,12 @@
   color: #999;
   text-decoration: line-through;
 }
+
+.github {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  color: #24292f;
+  transition: transform .15s ease;
+}
+.github:hover { transform: scale(1.1); }

@@ -1,18 +1,33 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-  <script src="vendor/js-yaml.min.js" defer></script>
-  <script>
-    window.yamlReady = fetch("todo.yaml")
-      .then(r => r.ok ? r.text() : Promise.reject(new Error("todo.yaml: " + r.status)));
-  </script>
-  <script type="module" src="render.js"></script>
-  <title>Master Todo</title>
-</head>
-<body>
-  <h1>Master Todo</h1>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="style.css" />
+        <script src="vendor/js-yaml.min.js" defer></script>
+        <script>
+            window.yamlReady = fetch("todo.yaml").then((r) =>
+                r.ok
+                    ? r.text()
+                    : Promise.reject(new Error("todo.yaml: " + r.status)),
+            );
+        </script>
+        <script type="module" src="render.js"></script>
+        <title>Master Todo</title>
+    </head>
+    <body>
+        <h1>Master Todo</h1>
+        <a
+            class="github"
+            href="https://github.com/mwnDK1402/master-todo"
+            aria-label="Kildekode på GitHub"
+        >
+            <img
+                src="icons/GitHub_Invertocat_Black.svg"
+                alt=""
+                width="32"
+                height="32"
+            />
+        </a>
+    </body>
 </html>
