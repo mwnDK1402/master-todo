@@ -57,7 +57,7 @@ function renderItem(item, done) {
 
     const p = document.createElement("p");
     p.className = "body";
-    p.textContent = item.details;
+    linkifyInto(p, item.details);
     details.append(p);
 
     appendTo = summary;
@@ -94,6 +94,25 @@ function updateProgress(section) {
   const boxes = [...section.querySelectorAll("input[type=checkbox]")]; // unpack
   const n = boxes.filter(b => b.checked).length;
   section.querySelector(".progress").textContent = formatProgress(n, boxes.length);
+}
+
+function makeLink(url) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.textContent = url;
+  return a;
+}
+
+function linkifyInto(el, text) {
+  let last = 0;
+  for (const m of text.matchAll(/https?:\/\/[^\s]+/g)) {
+    el.append(text.slice(last, m.index));
+    el.append(makeLink(m[0]));
+    last = m.index + m[0].length;
+  }
+  el.append(text.slice(last));
 }
 
 const data = jsyaml.load(text);
