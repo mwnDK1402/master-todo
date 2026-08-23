@@ -1,9 +1,11 @@
 # Master Todo
 
 One shared checklist for students of **DAT-GBG-DA-E26A**: everything you need to
-get done around the start of your studies — applying for SU, activating your
-school e-mail, meeting deadlines — gathered in one place instead of being
-scattered across group chats.
+get done during your studies — applying for SU, activating your
+school e-mail, project deadlines, exams — gathered in one place.
+
+It doesn't automatically update; it requires us to contribute,
+making sure fellow students don't miss anything important.
 
 ## Using the site
 
@@ -31,7 +33,7 @@ through a pull request:
   details: |          # optional — longer description, URLs become clickable
     https://www.su.dk/
   due: 2026-09-30     # optional — ISO date, YYYY-MM-DD
-  tags: [admin]       # optional
+  tags: [admin]       # optional — currently unused
 ```
 
 Two rules matter:
