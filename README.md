@@ -36,6 +36,10 @@ through a pull request:
   tags: [admin]       # optional — currently unused
 ```
 
+(A *slug* is a URL-friendly identifier: plain lowercase words joined by hyphens,
+like `apply-su`. If the term is new to you, see
+[Wikipedia](https://en.wikipedia.org/wiki/Clean_URL#Slug).)
+
 Two rules matter:
 
 - `id` values must be unique across the whole file, and **never rename or reuse
