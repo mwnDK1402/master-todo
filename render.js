@@ -1,6 +1,10 @@
 const text = await window.yamlReady;
 
-function renderCategory(category) {
+function formatDateISO(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function renderCategory(category, done) {
   const section = document.createElement("section");
   section.className = "category";
   if (category.mandatory)
@@ -12,7 +16,7 @@ function renderCategory(category) {
 
   const progress = document.createElement("p");
   progress.className = "progress";
-  progress.textContent = `? / ${category.items.length} færdige`;
+  progress.textContent = `0 / ${category.items.length} færdige`;
   section.append(progress);
 
   const ul = document.createElement("ul");
@@ -20,13 +24,13 @@ function renderCategory(category) {
   section.append(ul);
 
   for (const item of category.items) {
-    ul.append(renderItem(item));
+    ul.append(renderItem(item, done));
   }
 
   return section;
 }
 
-function renderItem(item) {
+function renderItem(item, done) {
   const li = document.createElement("li");
 
   const label = document.createElement("label");
@@ -35,12 +39,13 @@ function renderItem(item) {
   const box = document.createElement("input");
   box.type = "checkbox";
   box.dataset.id = item.id;
+  box.checked = item.id in done
   label.append(box);
 
   label.append(item.title);
 
   if (item.due) {
-    const iso = item.due.toISOString().slice(0, 10);
+    const iso = formatDateISO(item.due);
 
     const time = document.createElement("time");
     time.dateTime = iso;
@@ -52,7 +57,25 @@ function renderItem(item) {
   return li;
 }
 
-const data = jsyaml.load(text);
-for (const category of data.categories) {
-  document.querySelector("body").append(renderCategory(category));
+function loadDone() {
+  return JSON.parse(localStorage.getItem("done")) ?? {};
 }
+
+const data = jsyaml.load(text);
+const done = loadDone();
+for (const category of data.categories) {
+  document.querySelector("body").append(renderCategory(category, done));
+}
+
+document.addEventListener("change", (e) => {
+  const box = e.target;
+  if (!(box instanceof HTMLInputElement) || !box.dataset.id) return;
+
+  const id = box.dataset.id;
+  if (box.checked)
+    done[id] = formatDateISO(new Date());
+  else
+    delete done[id];
+
+  localStorage.setItem("done", JSON.stringify(done));
+});
