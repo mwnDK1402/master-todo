@@ -1,7 +1,7 @@
 const text = await window.yamlReady;
 
 function formatDateISO(date) {
-  return date.toISOString().slice(0, 10);
+  return date.toLocaleDateString("sv");
 }
 
 function formatProgress(n, of) {
