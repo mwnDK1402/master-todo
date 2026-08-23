@@ -37,17 +37,36 @@ function renderCategory(category, done) {
 
 function renderItem(item, done) {
   const li = document.createElement("li");
-
-  const label = document.createElement("label");
-  li.append(label);
+  li.className = "item";
 
   const box = document.createElement("input");
   box.type = "checkbox";
   box.dataset.id = item.id;
   box.checked = item.id in done;
-  label.append(box);
+  li.append(box);
 
-  label.append(item.title);
+  let appendTo = li;
+
+  const hasDetails = "details" in item;
+  if (hasDetails) {
+    const details = document.createElement("details");
+    li.append(details);
+
+    const summary = document.createElement("summary");
+    details.append(summary);
+
+    const p = document.createElement("p");
+    p.className = "body";
+    p.textContent = item.details;
+    details.append(p);
+
+    appendTo = summary;
+  }
+
+  const span = document.createElement("span");
+  span.className = "title";
+  span.textContent = item.title;
+  appendTo.append(span);
 
   if (item.due) {
     const iso = formatDateISO(item.due);
@@ -56,7 +75,7 @@ function renderItem(item, done) {
     time.dateTime = iso;
     // TODO: Format as Danish date
     time.textContent = " før " + iso;
-    label.append(time);
+    appendTo.append(time);
   }
 
   return li;
