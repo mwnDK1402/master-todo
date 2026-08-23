@@ -4,6 +4,10 @@ function formatDateISO(date) {
   return date.toISOString().slice(0, 10);
 }
 
+function formatProgress(n, of) {
+  return `${n} / ${of} færdige`;
+}
+
 function renderCategory(category, done) {
   const section = document.createElement("section");
   section.className = "category";
@@ -16,7 +20,6 @@ function renderCategory(category, done) {
 
   const progress = document.createElement("p");
   progress.className = "progress";
-  progress.textContent = `0 / ${category.items.length} færdige`;
   section.append(progress);
 
   const ul = document.createElement("ul");
@@ -26,6 +29,8 @@ function renderCategory(category, done) {
   for (const item of category.items) {
     ul.append(renderItem(item, done));
   }
+
+  updateProgress(section);
 
   return section;
 }
@@ -39,7 +44,7 @@ function renderItem(item, done) {
   const box = document.createElement("input");
   box.type = "checkbox";
   box.dataset.id = item.id;
-  box.checked = item.id in done
+  box.checked = item.id in done;
   label.append(box);
 
   label.append(item.title);
@@ -61,6 +66,12 @@ function loadDone() {
   return JSON.parse(localStorage.getItem("done")) ?? {};
 }
 
+function updateProgress(section) {
+  const boxes = [...section.querySelectorAll("input[type=checkbox]")]; // unpack
+  const n = boxes.filter(b => b.checked).length;
+  section.querySelector(".progress").textContent = formatProgress(n, boxes.length);
+}
+
 const data = jsyaml.load(text);
 const done = loadDone();
 for (const category of data.categories) {
@@ -78,4 +89,5 @@ document.addEventListener("change", (e) => {
     delete done[id];
 
   localStorage.setItem("done", JSON.stringify(done));
+  updateProgress(box.closest(".category"));
 });
