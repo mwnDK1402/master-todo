@@ -1,5 +1,5 @@
 categories:
-  - name: Mandatory
+  - name: Obligatorisk
     mandatory: true
     items:
       - id: apply-su
@@ -10,4 +10,28 @@ categories:
         tags: [admin]
       - id: activate-email
         title: Aktivér EK-mail
+        due: 2026-08-24
         tags: [admin]
+      - id: study-card
+        title: Bestil studiekort
+        details: |
+            https://mit.ek.dk/studiehaandbog/studiekort
+        due: 2026-08-24
+        tags: [admin]
+  - name: Valgfrit
+    mandatory: false
+    items:
+      - id: download-office
+        title: Download Office-pakken
+        due: 2026-08-24
+        tags: [admin]
+      - id: read-class-repo
+        title: Kig på lektionsplanen
+        details: |
+          https://github.com/EK-DAT-GBG-1SEM-E26AB/DAT-GBG-DA-E26AB/tree/main/35/01_man_2026-08-24
+        due: 2026-08-24
+      - id: dev-setup
+        title: Lav en GitHub-konto
+        details: |
+          https://github.com/EK-DAT-GBG-1SEM-E26AB/DAT-GBG-DA-E26AB/blob/main/35/02_tir_2026-08-25/README.md#forberedelse
+        due: 2026-08-25
