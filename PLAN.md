@@ -58,8 +58,8 @@ categories:
         title: Søg SU
         details: |         # optional longer description
           https://www.su.dk/
-        due: 2026-08-31    # optional; parsed as a Date object — normalize
-        tags: [admin]      #   via .toISOString().slice(0, 10) before use
+        due: 2026-08-31    # optional; parsed as a Date object — display via
+        tags: [admin]      #   toLocaleDateString("sv") = YYYY-MM-DD local date
 ```
 
 Rules:
@@ -82,12 +82,25 @@ Per category (built with `createElement`; text nodes are auto-escaped):
   <h2>Mandatory</h2>
   <p class="progress">1 / 12 færdige</p>
   <ul role="list">                     <!-- semantics kept, bullets hidden -->
-    <li>
-      <label>
-        <input type="checkbox" data-id="apply-su">
-        Søg SU
-        <time datetime="2026-09-30">før 30. september</time>
-      </label>
+    <li class="item">                  <!-- CSS grid: checkbox | content -->
+      <input type="checkbox" data-id="apply-su">
+      <details>                        <!-- only when the item has details -->
+        <summary>
+          <span class="title">Søg SU</span>
+          <time>før 2026-09-30</time>
+        </summary>
+        <p class="body">
+          <a href="https://www.su.dk/" target="_blank" rel="noopener">
+            https://www.su.dk/
+          </a>
+        </p>
+      </details>
+    </li>
+    <li class="item">
+      <input type="checkbox" data-id="activate-email">
+      <div>                            <!-- keeps both grid columns filled -->
+        <span class="title">Aktivér EK-mail</span>
+      </div>
     </li>
   </ul>
 </section>
@@ -95,7 +108,14 @@ Per category (built with `createElement`; text nodes are auto-escaped):
 
 - `<ul>` conveys "list of N items" to assistive tech; `role="list"` restores
   announcement after CSS hides markers (`list-style: none; padding: 0`).
-- Label wraps checkbox + title: clicking the title toggles the box.
+- Each row is a two-column grid (`auto 1fr`): checkbox on the left, content on
+  the right. The checkbox toggles only when clicked directly.
+- Items *with* details use a native `<details>`: clicking the title expands or
+  collapses it. Detail-less items get a plain `<div>` wrapper instead, so every
+  row has exactly two grid children.
+- Bare `http(s)://` URLs inside details become real links (`target="_blank"`,
+  `rel="noopener"`); the linkify regex only matches an explicit scheme, so a
+  crafted `javascript:` URL can never become an `href`.
 - UI text is Danish.
 
 ## Contribution flow
@@ -106,7 +126,8 @@ Per category (built with `createElement`; text nodes are auto-escaped):
 2. Merge to `main` → Pages republishes (~1 min).
 
 A `.github/PULL_REQUEST_TEMPLATE.md` and `CONTRIBUTING.md` with copy-paste
-snippets make this close to filling out a form.
+snippets make this close to filling out a form. Until those land, `README.md`
+carries the contributor-facing instructions.
 
 ### Overdue-item cleanup policy
 
@@ -117,8 +138,9 @@ tasks), mid-PR rebases confuse newcomers, and review costs one click.
 ## App features
 
 - Grouped list by category in document order.
-- Checkbox per item → saved instantly to localStorage (`mt-done`, with done-at
-  timestamps for export).
+- Checkbox per item → saved instantly to localStorage under `done`
+  (item id → completion date, `YYYY-MM-DD` local time) — reused by export.
+- Collapsible per-item details with auto-linked URLs.
 - Progress summary per category ("4 / 12 færdige").
 - Hide/show non-mandatory items; hidden ones stay reachable under a collapsed
   section.
@@ -135,7 +157,7 @@ x 2026-08-22 søg-su @admin +mandatory due:2026-08-31 Søg SU
 ```
 
 Mapping: `x <completion-date> ` prefix when done · `@<tag>` contexts · project
-tag from category slug · `due:<date>` · completion date from `mt-done`.
+tag from category slug · `due:<date>` · completion date from `done`.
 
 ## Tech choices
 
@@ -146,11 +168,11 @@ tag from category slug · `due:<date>` · completion date from `mt-done`.
 
 ## Milestones
 
-1. ~~**M1 – Skeleton**: Pages serving, YAML fetch + rendering, checkboxes~~
-   **in progress** — rendering works; localStorage persistence left.
+1. ~~**M1 – Skeleton**: Pages serving, YAML fetch + rendering, checkboxes,
+   localStorage persistence, progress counters, collapsible item details~~
 2. **M2 – Contributions**: validation workflow, PR template, CONTRIBUTING,
    Pages deploy workflow.
-3. **M3 – Polish**: hiding rules, search, due badges, progress counters,
+3. **M3 – Polish**: hiding rules, search, due badges,
    error surface for bad YAML, reset button.
 4. **M4 – Export**: Todo.txt + zip download.
 
