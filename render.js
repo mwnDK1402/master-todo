@@ -45,7 +45,7 @@ function renderItem(item, done) {
   box.checked = item.id in done;
   li.append(box);
 
-  let appendTo = li;
+  let appendTo;
 
   const hasDetails = "details" in item;
   if (hasDetails) {
@@ -61,6 +61,11 @@ function renderItem(item, done) {
     details.append(p);
 
     appendTo = summary;
+  } else {
+    const div = document.createElement("div");
+    li.append(div);
+
+    appendTo = div;
   }
 
   const span = document.createElement("span");
