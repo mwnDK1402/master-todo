@@ -3,3 +3,44 @@
   margin: 0;
   padding: 0;
 }
+
+.item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 .5rem;
+  align-items: start;
+  margin: .35rem 0;
+}
+
+.item > input[type="checkbox"] {
+  margin-top: .3em;
+}
+
+.item summary {
+  cursor: pointer;
+  width: fit-content;
+}
+
+.item summary::marker {
+  color: #666;
+}
+
+.item .title {
+  font-weight: 500;
+}
+
+.item time {
+  color: #777;
+  font-size: .9em;
+}
+
+.item .body {
+  white-space: pre-line;
+  margin: .15rem 0 0;
+  color: #444;
+}
+
+.item:has(> input:checked) .title {
+  color: #999;
+  text-decoration: line-through;
+}
