@@ -18,6 +18,12 @@ categories:
             https://mit.ek.dk/studiehaandbog/studiekort
         due: 2026-08-24
         tags: [admin]
+      - id: ai-intro
+        title: Læs materialer for 'SWOT og intro til AI'
+        details: |
+            https://ek.itslearning.com/plans/courses/7838/plan/148720?BackDestination=3&TopicId=25295
+        due: 2026-09-03
+        tags: [prep]
   - name: Valgfrit
     mandatory: false
     items:
