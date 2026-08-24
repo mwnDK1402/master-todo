@@ -36,8 +36,15 @@ categories:
         details: |
           https://github.com/EK-DAT-GBG-1SEM-E26AB/DAT-GBG-DA-E26AB/tree/main/35/01_man_2026-08-24
         due: 2026-08-24
+        tags: [prep]
       - id: dev-setup
         title: Lav en GitHub-konto
         details: |
           https://github.com/EK-DAT-GBG-1SEM-E26AB/DAT-GBG-DA-E26AB/blob/main/35/02_tir_2026-08-25/README.md#forberedelse
         due: 2026-08-25
+        tags: [prep]
+      - id: sms-notif
+        title: Tilmeld SMS-abonnement
+        details: |
+            https://ums.ek.dk/loggedin/default.aspx
+        tags: [admin]
